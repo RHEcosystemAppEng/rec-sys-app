@@ -8,7 +8,8 @@ from feast import (
 from feast.types import Float32
 from feast.stream_feature_view import stream_feature_view
 
-from data_sources import interactions_source, items_source, users_source, item_embed_push_source, user_embed_push_source, user_items_push_source, item_textual_features_embed_push_source
+from data_sources import (interactions_source, items_source, users_source, item_embed_push_source, user_embed_push_source,
+                          user_items_push_source, item_textual_features_embed_push_source, item_clip_features_embed_push_source)
 from entities import user_entity, item_entity
 from feast.types import Float32, Float64, Int32, Int64, String, Bool, Array
 
@@ -176,5 +177,22 @@ item_textual_features_embed_view = FeatureView(
         ),
     ],
     source=item_textual_features_embed_push_source,
+    online=True
+)
+
+item_clip_features_embed_view = FeatureView(
+    name="item_clip_features_embed",
+    entities=[item_entity],
+    ttl=timedelta(days=365 * 5),
+    schema=[
+        Field(name="item_id", dtype=String),
+        Field(
+            name="clip_latent_space_embedding", # a unique space for text and images
+            dtype=Array(Float32),
+            vector_index=True,
+            vector_search_metric="cosine",
+        ),
+    ],
+    source=item_clip_features_embed_push_source,
     online=True
 )

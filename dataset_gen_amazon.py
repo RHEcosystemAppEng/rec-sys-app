@@ -233,10 +233,10 @@ if __name__ ==  '__main__':
     dummy_item_embed_df = pd.DataFrame(columns=['item_id', 'embedding', 'event_timestamp'], data=[[generate_id(), [1., 2.], datetime.now() + timedelta(days=365 * 7)]]) # used for type casting will be removed automaticly
     dummy_user_items_df = pd.DataFrame(columns=['user_id', 'top_k_item_ids', 'event_timestamp'], data=[[generate_id(), [generate_id(), generate_id()], datetime.now() + timedelta(days=365 * 7)]]) # used for type casting will be removed automaticly
     dummy_user_embed_df = pd.DataFrame(columns=['user_id', 'embedding', 'event_timestamp'], data=[[generate_id(), [1., 2.], datetime.now() + timedelta(days=365 * 7)]]) # used for type casting will be removed automaticly
-    # Dummy textual feature for push source
+    # Dummy textual / clip features for push source
     dummy_textual_feature_df = pd.DataFrame(columns=['item_id', 'about_product_embedding', 'event_timestamp'], data=[[generate_id(), [1., 2.], datetime.now() + timedelta(days=365 * 7)]]) # used for type casting will be removed automaticly
-    
-    
+    dummy_clip_feature_df = pd.DataFrame(columns=['item_id', 'clip_latent_space_embedding', 'event_timestamp'], data=[[generate_id(), [1., 2.], datetime.now() + timedelta(days=365 * 7)]]) # used for type casting will be removed automaticly
+
     # dummy_item_embed_df = dummy_item_embed_df.astype({'item_id': 'int64', 'event_timestamp': 'datetime64[us]', 'embedding': 'object'})
     # dummy_user_embed_df = dummy_user_embed_df.astype({'user_id': 'int64', 'event_timestamp': 'datetime64[us]', 'embedding': 'object'})
     
@@ -244,4 +244,5 @@ if __name__ ==  '__main__':
     dummy_user_embed_df.to_parquet('feature_repo/data/dummy_user_embed.parquet', index=False)
     dummy_user_items_df.to_parquet('feature_repo/data/user_items.parquet', index=False)
     dummy_textual_feature_df.to_parquet('feature_repo/data/item_textual_features_embed.parquet', index=False)
+    dummy_clip_feature_df.to_parquet('feature_repo/data/item_clip_features_embed.parquet', index=False)
     

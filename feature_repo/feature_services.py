@@ -1,6 +1,7 @@
 from feast import FeatureService
 
-from feature_views import user_feature_view, item_feature_view, interaction_feature_view, item_embedding_view, user_items_view, item_textual_features_embed_view
+from feature_views import (user_feature_view, item_feature_view, interaction_feature_view, item_embedding_view, user_items_view,
+                           item_textual_features_embed_view, item_clip_features_embed_view)
 
 item_feature_service = FeatureService(
     name="item_service",
@@ -25,4 +26,8 @@ user_top_k_items_service = FeatureService(
 item_textual_features_embed_view_service = FeatureService(
     name='item_textual_features_embed',
     features=[item_textual_features_embed_view]
+)
+item_clip_features_embed_view_service = FeatureService(
+    name='item_clip_features_embed',
+    features=[item_clip_features_embed_view]
 )
