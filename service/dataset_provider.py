@@ -16,10 +16,10 @@ class DatasetProvider:
 
 
 class LocalDatasetProvider(DatasetProvider):
-    def __init__(self, store=None):
-        self._item_df_path = Path("./feature_repo/data/item_df_output.parquet")
-        self._user_df_path = Path("./feature_repo/data/user_df_output.parquet")
-        self._interaction_df_path = Path("./feature_repo/data/interaction_df_output.parquet")
+    def __init__(self, store=None, data_dir="./feature_repo/data"):
+        self._item_df_path = Path(data_dir) / "recommendation_items.parquet"
+        self._user_df_path = Path(data_dir) / "recommendation_users.parquet" 
+        self._interaction_df_path = Path(data_dir) / "recommendation_interactions.parquet"
 
         if self._item_df_path.exists() & self._user_df_path.exists() & self._interaction_df_path.exists():
             self._item_df = pd.read_parquet(self._item_df_path)
@@ -38,7 +38,7 @@ class LocalDatasetProvider(DatasetProvider):
         interaction_service = store.get_feature_service("interaction_service")
         print('service loaded')
 
-        interactions_ids = pd.read_parquet('./feature_repo/data/recommendation_interactions.parquet')
+        interactions_ids = pd.read_parquet(self._interaction_df_path) # this line will create bug in new dataset case, wait for Feast bug fix
         user_ids = interactions_ids['user_id'].unique().tolist()
         item_ids = interactions_ids['item_id'].unique().tolist()
         # select which items to use for the training
