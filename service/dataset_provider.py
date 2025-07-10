@@ -4,39 +4,51 @@ from pathlib import Path
 import pandas as pd
 from feast import FeatureStore
 
+from models import data_util
+
 
 class DatasetProvider:
-    def item_df(self):
-        return None
 
-    def user_df(self):
-        return None
-
-    def interaction_df(self):
-        return None
-
-
-class LocalDatasetProvider(DatasetProvider):
-    def __init__(self, store=None, data_dir="./feature_repo/data"):
+    def __init__(self, data_dir, force_load):
         self._item_df_path = Path(data_dir) / "recommendation_items.parquet"
         self._user_df_path = Path(data_dir) / "recommendation_users.parquet"
         self._interaction_df_path = (
-            Path(data_dir) / "recommendation_interactions.parquet"
+                Path(data_dir) / "recommendation_interactions.parquet"
         )
+        self._loaded = False
 
         if (
-            self._item_df_path.exists()
-            & self._user_df_path.exists()
-            & self._interaction_df_path.exists()
+                self._item_df_path.exists() & self._user_df_path.exists()
+                & self._interaction_df_path.exists() & force_load is False
         ):
             self._item_df = pd.read_parquet(self._item_df_path)
             self._user_df = pd.read_parquet(self._user_df_path)
             self._interaction_df = pd.read_parquet(self._interaction_df_path)
-            return
+            self._loaded = True
 
-        # Use Feast item, user and interaction services to create the dataframes
-        assert store is not None
-        self._load_from_store(store)
+    def item_df(self):
+        return self._item_df
+
+    def user_df(self):
+        return self._user_df
+
+    def interaction_df(self):
+        return self._interaction_df
+
+    def _save_dfs_to_parquet(self):
+        self._item_df.to_parquet(self._item_df_path)
+        self._user_df.to_parquet(self._user_df_path)
+        self._interaction_df.to_parquet(self._interaction_df_path)
+
+
+class LocalDatasetProvider(DatasetProvider):
+
+    def __init__(self, store=None, data_dir="./feature_repo/data"):
+        super().__init__(data_dir, False)
+        if self._loaded is False:
+            assert store is not None
+            self._load_from_store(store)
+            self._save_dfs_to_parquet()
 
     def _load_from_store(self, store: FeatureStore):
         # load feature services
@@ -77,15 +89,15 @@ class LocalDatasetProvider(DatasetProvider):
         self._interaction_df = store.get_historical_features(
             entity_df=item_user_interactions_df, features=interaction_service
         ).to_df()
-        self._item_df.to_parquet(self._item_df_path)
-        self._user_df.to_parquet(self._user_df_path)
-        self._interaction_df.to_parquet(self._interaction_df_path)
 
-    def item_df(self):
-        return self._item_df
 
-    def user_df(self):
-        return self._user_df
+class RemoteDatasetProvider(DatasetProvider):
 
-    def interaction_df(self):
-        return self._interaction_df
+    def __init__(self, url: str, data_dir="./feature_repo/data", force_load=False):
+        super().__init__(data_dir, force_load)
+        if self._loaded is False:
+            df = pd.read_csv(url)
+            self._item_df, self._user_df, self._interaction_df = data_util.clean_dataset(df)
+            self._save_dfs_to_parquet()
+
+
