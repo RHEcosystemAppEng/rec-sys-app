@@ -24,7 +24,7 @@ class ClipEncoder:
 
     def create_clip_embeddings(self, item_df):
         texts = item_df['about_product'].tolist()
-        image_links = item_df['product_link'].tolist()
+        image_links = item_df['img_link'].tolist()
         images = [Image.open(requests.get(url, stream=True).raw) if url is not None else None for url in image_links]
         return self.encode_texts_and_images(texts, images)
 

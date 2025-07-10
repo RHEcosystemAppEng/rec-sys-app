@@ -109,11 +109,11 @@ def generate_items():
         # Generate product name using Ollama API
         product_name  = item.item_name
         about_product = item.item_description
-        
+
         # Generate URLs
-        img_link = f"https://m.media-amazon.com/images/W/WEBP_{np.random.randint(100000, 999999)}..."
-        product_link = f"https://raw.githubusercontent.com/RHEcosystemAppEng/rec-sys-app/refs/heads/main/generation/data/generated_images/item_{product_name.replace(' ', '%20')}.png"
-        
+        img_link = f"https://raw.githubusercontent.com/RHEcosystemAppEng/rec-sys-app/refs/heads/main/generation/data/generated_images/item_{product_name.replace(' ', '%20')}.png"
+        product_link = f"https://www.amazon.in/Wayona-Braided-WN{np.random.randint(1000, 9999)}..."
+
         arrival_date = datetime(2023, 1, 1) + timedelta(days=np.random.randint(0, 365), hours=np.random.randint(0, 24),minutes=np.random.randint(0, 60))
         items.append({
             'item_id': item_id,
