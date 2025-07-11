@@ -118,3 +118,16 @@ def test_text_encoding(clip_encoder, more_texts):
 #     # produced the object to be used by the workflow:
 #     # store.push('item_clip_features_embed', item_clip_features_embed, to=PushMode.ONLINE, allow_registry_cache=False)
 #     assert item_clip_features_embed is not None
+
+
+@pytest.fixture
+def item_wrong_img_df():
+    return pd.DataFrame({
+        'about_product': ['this is a nice product!'],
+        'img_link': ['https://m.media-amazon.com/images/W/WEBP_402378-T1/images/I/51UsScvHQNL._SX300_SY300_QL70_FMwebp_.jpg']
+    })
+
+
+def test_wrong_url(clip_encoder, item_wrong_img_df):
+    clip_embeddings = clip_encoder.create_clip_embeddings(item_wrong_img_df)
+    assert clip_embeddings
