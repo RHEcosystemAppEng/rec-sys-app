@@ -22,7 +22,7 @@ def before_all(request):
 @pytest.fixture
 def item_df():
     parquet_file = (
-        Path(__file__).parent.joinpath("data").joinpath("item_df_output.parquet")
+        Path(__file__).parent.joinpath("data").joinpath("recommendation_items.parquet")
     )
     return pd.read_parquet(parquet_file)
 
