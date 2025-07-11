@@ -9,6 +9,13 @@ CLIP_MODEL_NAME = "openai/clip-vit-base-patch32"
 CLIP_MODEL_SIZE = 512
 
 
+def open_image(url):
+    try:
+        return Image.open(requests.get(url, stream=True).raw)
+    except Exception:
+        return None
+
+
 class ClipEncoder:
     def __init__(self):
         self.image_processor = CLIPImageProcessor.from_pretrained(CLIP_MODEL_NAME)
@@ -25,7 +32,7 @@ class ClipEncoder:
     def create_clip_embeddings(self, item_df):
         texts = item_df['about_product'].tolist()
         image_links = item_df['img_link'].tolist()
-        images = [Image.open(requests.get(url, stream=True).raw) if url is not None else None for url in image_links]
+        images = [open_image(url) if url is not None else None for url in image_links]
         return self.encode_texts_and_images(texts, images)
 
     def encode_texts_and_images(self, texts: list[str], images: list[Image], batch_size: int = 32):
