@@ -13,9 +13,9 @@ class TwoTowerModel(nn.Module):
         super().__init__()
         self.item_tower = item_tower
         self.user_tower = user_tower
-        
+
     def forward(self, items_dict: Dict[str, Tensor], users_dict: Dict[str, Tensor]):
-        items_embed = self.item_tower(**items_dict) # shape -> bs, dim
-        users_embed = self.user_tower(**users_dict) # shape -> bs, dim
-        
-        return torch.norm(items_embed - users_embed, dim=-1) # shape -> bs
+        items_embed = self.item_tower(**items_dict)  # shape -> bs, dim
+        users_embed = self.user_tower(**users_dict)  # shape -> bs, dim
+
+        return torch.norm(items_embed - users_embed, dim=-1)  # shape -> bs

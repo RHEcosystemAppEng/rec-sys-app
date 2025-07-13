@@ -21,7 +21,9 @@ def before_all(request):
 
 @pytest.fixture
 def item_df():
-    parquet_file = Path(__file__).parent.joinpath('data').joinpath("item_df_output.parquet")
+    parquet_file = (
+        Path(__file__).parent.joinpath("data").joinpath("item_df_output.parquet")
+    )
     return pd.read_parquet(parquet_file)
 
 
@@ -37,11 +39,18 @@ def simple_texts():
 
 @pytest.fixture
 def simple_images():
-    image_links = ["http://images.cocodataset.org/val2017/000000039769.jpg",
-            "https://farm1.staticflickr.com/111/299422173_a073c92714_z.jpg"]
+    image_links = [
+        "http://images.cocodataset.org/val2017/000000039769.jpg",
+        "https://farm1.staticflickr.com/111/299422173_a073c92714_z.jpg",
+    ]
     images = [Image.open(requests.get(url, stream=True).raw) for url in image_links]
 
-    generated_image_path = Path(__file__).parent.parent.joinpath("generation").joinpath("data").joinpath("generated_images")
+    generated_image_path = (
+        Path(__file__)
+        .parent.parent.joinpath("generation")
+        .joinpath("data")
+        .joinpath("generated_images")
+    )
     gen_1 = generated_image_path.joinpath("item_CarVac Pro.png")
     gen_2 = generated_image_path.joinpath("item_FilterPro Set.png")
 
@@ -79,13 +88,17 @@ def test_image_encoding(clip_encoder, more_images, images_having_nones):
     # non batched
     result_simple = clip_encoder.encode_images(more_images)
     # batched with no nones
-    result_batched, none_indices = clip_encoder.encode_images_batched_having_nones(more_images, batch_size=3)
+    result_batched, none_indices = clip_encoder.encode_images_batched_having_nones(
+        more_images, batch_size=3
+    )
     assert none_indices == []
     # we expect the same result
     assert torch.allclose(result_batched, result_simple, 1e-05, 1e-05)
 
     # batched with nones
-    embeddings, none_indices = clip_encoder.encode_images_batched_having_nones(images_having_nones, batch_size=3)
+    embeddings, none_indices = clip_encoder.encode_images_batched_having_nones(
+        images_having_nones, batch_size=3
+    )
     assert none_indices == [3, 7, 9]
     # we expect the same results for non-nones
     for i, _ in enumerate(embeddings):
@@ -94,7 +107,9 @@ def test_image_encoding(clip_encoder, more_images, images_having_nones):
 
 
 def test_image_and_text_encoding(clip_encoder, more_texts, images_having_nones):
-    clip_embeddings = clip_encoder.encode_texts_and_images(more_texts, images_having_nones, 4)
+    clip_embeddings = clip_encoder.encode_texts_and_images(
+        more_texts, images_having_nones, 4
+    )
     assert clip_embeddings is not None
 
 

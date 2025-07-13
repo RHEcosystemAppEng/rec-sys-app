@@ -19,10 +19,16 @@ class DatasetProvider:
 class LocalDatasetProvider(DatasetProvider):
     def __init__(self, store=None, data_dir="./feature_repo/data"):
         self._item_df_path = Path(data_dir) / "recommendation_items.parquet"
-        self._user_df_path = Path(data_dir) / "recommendation_users.parquet" 
-        self._interaction_df_path = Path(data_dir) / "recommendation_interactions.parquet"
+        self._user_df_path = Path(data_dir) / "recommendation_users.parquet"
+        self._interaction_df_path = (
+            Path(data_dir) / "recommendation_interactions.parquet"
+        )
 
-        if self._item_df_path.exists() & self._user_df_path.exists() & self._interaction_df_path.exists():
+        if (
+            self._item_df_path.exists()
+            & self._user_df_path.exists()
+            & self._interaction_df_path.exists()
+        ):
             self._item_df = pd.read_parquet(self._item_df_path)
             self._user_df = pd.read_parquet(self._user_df_path)
             self._interaction_df = pd.read_parquet(self._interaction_df_path)
@@ -37,33 +43,40 @@ class LocalDatasetProvider(DatasetProvider):
         item_service = store.get_feature_service("item_service")
         user_service = store.get_feature_service("user_service")
         interaction_service = store.get_feature_service("interaction_service")
-        print('service loaded')
+        print("service loaded")
 
-        interactions_ids = pd.read_parquet(self._interaction_df_path) # this line will create bug in new dataset case, wait for Feast bug fix
-        user_ids = interactions_ids['user_id'].unique().tolist()
-        item_ids = interactions_ids['item_id'].unique().tolist()
+        interactions_ids = pd.read_parquet(
+            self._interaction_df_path
+        )  # this line will create bug in new dataset case, wait for Feast bug fix
+        user_ids = interactions_ids["user_id"].unique().tolist()
+        item_ids = interactions_ids["item_id"].unique().tolist()
         # select which items to use for the training
         item_entity_df = pd.DataFrame.from_dict(
             {
-                'item_id': item_ids,
-                'event_timestamp': [datetime(2025, 1, 1)] * len(item_ids)
+                "item_id": item_ids,
+                "event_timestamp": [datetime(2025, 1, 1)] * len(item_ids),
             }
         )
         # select which users to use for the training
         user_entity_df = pd.DataFrame.from_dict(
             {
-                'user_id': user_ids,
-                'event_timestamp': [datetime(2025, 1, 1)] * len(user_ids)
+                "user_id": user_ids,
+                "event_timestamp": [datetime(2025, 1, 1)] * len(user_ids),
             }
         )
         # Select which item-user interactions to use for the training
-        item_user_interactions_df = interactions_ids[['item_id', 'user_id']].copy()
-        item_user_interactions_df['event_timestamp'] = datetime(2025, 1, 1)
+        item_user_interactions_df = interactions_ids[["item_id", "user_id"]].copy()
+        item_user_interactions_df["event_timestamp"] = datetime(2025, 1, 1)
         # retrieve datasets for training
-        self._item_df = store.get_historical_features(entity_df=item_entity_df, features=item_service).to_df()
-        self._user_df = store.get_historical_features(entity_df=user_entity_df, features=user_service).to_df()
-        self._interaction_df = store.get_historical_features(entity_df=item_user_interactions_df,
-                                                             features=interaction_service).to_df()
+        self._item_df = store.get_historical_features(
+            entity_df=item_entity_df, features=item_service
+        ).to_df()
+        self._user_df = store.get_historical_features(
+            entity_df=user_entity_df, features=user_service
+        ).to_df()
+        self._interaction_df = store.get_historical_features(
+            entity_df=item_user_interactions_df, features=interaction_service
+        ).to_df()
         self._item_df.to_parquet(self._item_df_path)
         self._user_df.to_parquet(self._user_df_path)
         self._interaction_df.to_parquet(self._interaction_df_path)
@@ -76,6 +89,3 @@ class LocalDatasetProvider(DatasetProvider):
 
     def interaction_df(self):
         return self._interaction_df
-
-
-

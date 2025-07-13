@@ -1,11 +1,15 @@
 from datetime import timedelta
 
-from data_sources import (interactions_source,
-                          item_clip_features_embed_push_source,
-                          item_embed_push_source,
-                          item_textual_features_embed_push_source,
-                          items_source, user_embed_push_source,
-                          user_items_push_source, users_source)
+from data_sources import (
+    interactions_source,
+    item_clip_features_embed_push_source,
+    item_embed_push_source,
+    item_textual_features_embed_push_source,
+    items_source,
+    user_embed_push_source,
+    user_items_push_source,
+    users_source,
+)
 from entities import item_entity, user_entity
 from feast import FeatureView, Field, StreamFeatureView
 from feast.stream_feature_view import stream_feature_view
@@ -21,13 +25,13 @@ user_feature_view = FeatureView(
         Field(name="preferences", dtype=String),
     ],
     source=users_source,
-    online=False
+    online=False,
 )
 
 item_feature_view = FeatureView(
     name="item_features",
     entities=[item_entity],
-    ttl=timedelta(days=365 * 5), 
+    ttl=timedelta(days=365 * 5),
     schema=[
         Field(name="item_id", dtype=String),
         Field(name="product_name", dtype=String),
@@ -42,7 +46,7 @@ item_feature_view = FeatureView(
         Field(name="product_link", dtype=String),
     ],
     source=items_source,
-    online=True
+    online=True,
 )
 
 interaction_feature_view = FeatureView(
@@ -60,7 +64,7 @@ interaction_feature_view = FeatureView(
         Field(name="quantity", dtype=Float64),
     ],
     source=interactions_source,
-    online=False
+    online=False,
 )
 # interaction_stream_feature_view = FeatureView(
 #     name="interactions_stream_features",
@@ -128,7 +132,7 @@ item_embedding_view = FeatureView(
         ),
     ],
     source=item_embed_push_source,
-    online=True
+    online=True,
 )
 
 user_embedding_view = FeatureView(
@@ -142,10 +146,10 @@ user_embedding_view = FeatureView(
             dtype=Array(Float32),
             vector_index=True,
             vector_search_metric="cosine",
-        )
+        ),
     ],
     source=user_embed_push_source,
-    online=True
+    online=True,
 )
 
 user_items_view = FeatureView(
@@ -154,10 +158,10 @@ user_items_view = FeatureView(
     ttl=timedelta(days=365 * 5),
     schema=[
         Field(name="user_id", dtype=String),
-        Field(name='top_k_item_ids', dtype=Array(String), vector_index=False)
+        Field(name="top_k_item_ids", dtype=Array(String), vector_index=False),
     ],
     source=user_items_push_source,
-    online=True
+    online=True,
 )
 
 item_textual_features_embed_view = FeatureView(
@@ -174,7 +178,7 @@ item_textual_features_embed_view = FeatureView(
         ),
     ],
     source=item_textual_features_embed_push_source,
-    online=True
+    online=True,
 )
 
 item_clip_features_embed_view = FeatureView(
@@ -184,12 +188,12 @@ item_clip_features_embed_view = FeatureView(
     schema=[
         Field(name="item_id", dtype=String),
         Field(
-            name="clip_latent_space_embedding", # a unique space for text and images
+            name="clip_latent_space_embedding",  # a unique space for text and images
             dtype=Array(Float32),
             vector_index=True,
             vector_search_metric="cosine",
         ),
     ],
     source=item_clip_features_embed_push_source,
-    online=True
+    online=True,
 )

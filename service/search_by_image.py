@@ -16,12 +16,14 @@ class SearchByImageService:
         return self.search_by_image(image, k)
 
     def search_by_image(self, image, k):
-        clip_embedding = self.clip_encoder.encode_images([image])[0].cpu().detach().numpy()
+        clip_embedding = (
+            self.clip_encoder.encode_images([image])[0].cpu().detach().numpy()
+        )
 
         ids = self.store.retrieve_online_documents(
             query=list(clip_embedding),
             top_k=k,
-            features=['item_clip_features_embed:item_id']
+            features=["item_clip_features_embed:item_id"],
         ).to_df()
         ids["event_timestamp"] = pd.to_datetime("now", utc=True)
 
@@ -31,4 +33,3 @@ class SearchByImageService:
             features=item_service,
         ).to_df()
         return values
-

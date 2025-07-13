@@ -7,14 +7,14 @@ from diffusers import StableDiffusionPipeline
 
 
 def main():
-    data_directory = Path(__file__).parent.joinpath('data')
-    item_df = pd.read_parquet('feature_repo/data/item_df_output.parquet')
+    data_directory = Path(__file__).parent.joinpath("data")
+    item_df = pd.read_parquet("feature_repo/data/item_df_output.parquet")
     pprint(item_df)
 
     # Load the Stable Diffusion pipeline (open model)
     pipe = StableDiffusionPipeline.from_pretrained(
         "runwayml/stable-diffusion-v1-5",
-        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32
+        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
     )
     device = "cuda" if torch.cuda.is_available() else "cpu"
     pipe = pipe.to(device)
@@ -32,5 +32,5 @@ def main():
         print(f"Generated image for item {product_name}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

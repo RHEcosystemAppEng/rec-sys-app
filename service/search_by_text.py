@@ -19,7 +19,7 @@ class SearchService:
             [text],
             padding=True,
             truncation=True,
-            return_tensors='pt',
+            return_tensors="pt",
         )
 
         with torch.no_grad():
@@ -27,14 +27,16 @@ class SearchService:
             # CLS pooling
             batch_embeddings = model_output[0][:, 0]
             # Normalize
-            batch_embeddings = torch.nn.functional.normalize(batch_embeddings, p=2, dim=1)
+            batch_embeddings = torch.nn.functional.normalize(
+                batch_embeddings, p=2, dim=1
+            )
 
         user_embed = batch_embeddings.cpu().detach().numpy()
 
         ids = self.store.retrieve_online_documents(
             query=list(user_embed[0]),
             top_k=k,
-            features=['item_textual_features_embed:item_id']
+            features=["item_textual_features_embed:item_id"],
         ).to_df()
         ids["event_timestamp"] = pd.to_datetime("now", utc=True)
 
