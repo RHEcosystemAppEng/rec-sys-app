@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class ItemTower(nn.Module):
     def __init__(self, d_model=64, category_count=5, subcategory_count=25):
         super().__init__()

@@ -1,6 +1,8 @@
-import pandas as pd
 from datetime import datetime
+
 import numpy as np
+import pandas as pd
+
 
 # Rule-based filtering functions
 def _availability_filter(user_df: pd.DataFrame, item_df: pd.DataFrame) -> pd.DataFrame:

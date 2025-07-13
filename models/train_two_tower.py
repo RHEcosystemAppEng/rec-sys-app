@@ -1,10 +1,12 @@
-from models.two_tower import TwoTowerModel
 import pandas as pd
-from models.data_util import preproccess_pipeline, UserItemMagnitudeDataset
-from models.entity_tower import EntityTower
-from torch.utils.data import DataLoader
 import torch
 import torch.nn as nn
+from torch.utils.data import DataLoader
+
+from models.data_util import UserItemMagnitudeDataset, preproccess_pipeline
+from models.entity_tower import EntityTower
+from models.two_tower import TwoTowerModel
+
 
 def create_and_train_two_tower(item_df: pd.DataFrame, user_df: pd.DataFrame, interaction_df: pd.DataFrame,  return_epoch_losses: bool=False, n_epochs: int = 10, return_model_definition: bool =False):
     dataset = preproccess_pipeline(item_df, user_df, interaction_df)

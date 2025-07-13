@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
+
 class UserTower(nn.Module):
     def __init__(self, d_model: int=64, preferences_category_count: int=5, gender_category_count: int=3):
         super().__init__()

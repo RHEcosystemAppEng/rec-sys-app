@@ -1,8 +1,11 @@
+from unittest.mock import Mock, patch
+
+import pandas as pd
 import pytest
 import torch
-from unittest.mock import Mock, patch
+
 from service.search_by_text import SearchService
-import pandas as pd
+
 
 @pytest.fixture
 def mock_feature_store():

@@ -1,9 +1,12 @@
+from typing import Dict
+
 import torch
 import torch.nn as nn
 from torch import Tensor
+
 from models.item_tower import ItemTower
 from models.user_tower import UserTower
-from typing import Dict
+
 
 class TwoTowerModel(nn.Module):
     def __init__(self, item_tower: ItemTower, user_tower: UserTower):

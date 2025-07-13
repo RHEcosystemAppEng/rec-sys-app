@@ -1,9 +1,9 @@
-import torch
-from transformers import CLIPModel, CLIPTokenizer, CLIPImageProcessor
-from PIL import Image
 from datetime import datetime
-import requests
 
+import requests
+import torch
+from PIL import Image
+from transformers import CLIPImageProcessor, CLIPModel, CLIPTokenizer
 
 CLIP_MODEL_NAME = "openai/clip-vit-base-patch32"
 CLIP_MODEL_SIZE = 512

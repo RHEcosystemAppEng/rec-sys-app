@@ -1,12 +1,14 @@
+import random
+from pathlib import Path
+
+import numpy as np
 import pandas as pd
 import pytest
-import torch
-import random
-import numpy as np
-from pathlib import Path
-from service.clip_encoder import ClipEncoder
-from PIL import Image
 import requests
+import torch
+from PIL import Image
+
+from service.clip_encoder import ClipEncoder
 
 
 @pytest.fixture(scope="session", autouse=True)

@@ -1,7 +1,9 @@
-import pytest
-import pandas as pd
-import torch
 from datetime import datetime
+
+import pandas as pd
+import pytest
+import torch
+
 from models.data_util import data_preproccess
 
 

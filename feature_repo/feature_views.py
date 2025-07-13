@@ -1,18 +1,15 @@
 from datetime import timedelta
 
-from feast import (
-    FeatureView,
-    Field,
-    StreamFeatureView
-)
-from feast.types import Float32
+from data_sources import (interactions_source,
+                          item_clip_features_embed_push_source,
+                          item_embed_push_source,
+                          item_textual_features_embed_push_source,
+                          items_source, user_embed_push_source,
+                          user_items_push_source, users_source)
+from entities import item_entity, user_entity
+from feast import FeatureView, Field, StreamFeatureView
 from feast.stream_feature_view import stream_feature_view
-
-from data_sources import (interactions_source, items_source, users_source, item_embed_push_source, user_embed_push_source,
-                          user_items_push_source, item_textual_features_embed_push_source, item_clip_features_embed_push_source)
-from entities import user_entity, item_entity
-from feast.types import Float32, Float64, Int32, Int64, String, Bool, Array
-
+from feast.types import Array, Bool, Float32, Float64, Int32, Int64, String
 
 user_feature_view = FeatureView(
     name="user_features",

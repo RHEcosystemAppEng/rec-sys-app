@@ -1,8 +1,9 @@
-from feast import FeatureStore
-from service.clip_encoder import ClipEncoder
 import pandas as pd
 import requests
+from feast import FeatureStore
 from PIL import Image
+
+from service.clip_encoder import ClipEncoder
 
 
 class SearchByImageService:

@@ -1,11 +1,12 @@
-import pandas as pd
-import numpy as np
-from datetime import datetime, timedelta
-import random
 import argparse
 import pathlib
+import random
 import secrets
 import string
+from datetime import datetime, timedelta
+
+import numpy as np
+import pandas as pd
 
 categories = ['Computers&Accessories|Accessories&Peripherals|Cables&Accessories|Cables|USBCables',
        'Electronics|WearableTechnology|SmartWatches',

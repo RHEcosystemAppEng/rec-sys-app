@@ -1,8 +1,9 @@
 from pathlib import Path
-import pandas as pd
 from pprint import pprint
-from diffusers import StableDiffusionPipeline
+
+import pandas as pd
 import torch
+from diffusers import StableDiffusionPipeline
 
 
 def main():

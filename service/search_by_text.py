@@ -1,8 +1,7 @@
 import pandas as pd
-from feast import FeatureStore
-from transformers import AutoTokenizer, AutoModel
-
 import torch
+from feast import FeatureStore
+from transformers import AutoModel, AutoTokenizer
 
 EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
 
