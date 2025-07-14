@@ -84,40 +84,40 @@ def test_text_encoding(clip_encoder, more_texts):
     assert torch.allclose(result_batched, result_simple, 1e-05, 1e-05)
 
 
-# def test_image_encoding(clip_encoder, more_images, images_having_nones):
-#     # non batched
-#     result_simple = clip_encoder.encode_images(more_images)
-#     # batched with no nones
-#     result_batched, none_indices = clip_encoder.encode_images_batched_having_nones(
-#         more_images, batch_size=3
-#     )
-#     assert none_indices == []
-#     # we expect the same result
-#     assert torch.allclose(result_batched, result_simple, 1e-05, 1e-05)
+def test_image_encoding(clip_encoder, more_images, images_having_nones):
+    # non batched
+    result_simple = clip_encoder.encode_images(more_images)
+    # batched with no nones
+    result_batched, none_indices = clip_encoder.encode_images_batched_having_nones(
+        more_images, batch_size=3
+    )
+    assert none_indices == []
+    # we expect the same result
+    assert torch.allclose(result_batched, result_simple, 1e-05, 1e-05)
 
-#     # batched with nones
-#     embeddings, none_indices = clip_encoder.encode_images_batched_having_nones(
-#         images_having_nones, batch_size=3
-#     )
-#     assert none_indices == [3, 7, 9]
-#     # we expect the same results for non-nones
-#     for i, _ in enumerate(embeddings):
-#         if i not in none_indices:
-#             assert torch.allclose(embeddings[i], result_simple[i], 1e-05, 1e-05)
-
-
-# def test_image_and_text_encoding(clip_encoder, more_texts, images_having_nones):
-#     clip_embeddings = clip_encoder.encode_texts_and_images(
-#         more_texts, images_having_nones, 4
-#     )
-#     assert clip_embeddings is not None
+    # batched with nones
+    embeddings, none_indices = clip_encoder.encode_images_batched_having_nones(
+        images_having_nones, batch_size=3
+    )
+    assert none_indices == [3, 7, 9]
+    # we expect the same results for non-nones
+    for i, _ in enumerate(embeddings):
+        if i not in none_indices:
+            assert torch.allclose(embeddings[i], result_simple[i], 1e-05, 1e-05)
 
 
-# def test_item_df_embedding_generation(clip_encoder, item_df):
-#     item_clip_features_embed = clip_encoder.clip_embeddings(item_df)
-#     # produced the object to be used by the workflow:
-#     # store.push('item_clip_features_embed', item_clip_features_embed, to=PushMode.ONLINE, allow_registry_cache=False)
-#     assert item_clip_features_embed is not None
+def test_image_and_text_encoding(clip_encoder, more_texts, images_having_nones):
+    clip_embeddings = clip_encoder.encode_texts_and_images(
+        more_texts, images_having_nones, 4
+    )
+    assert clip_embeddings is not None
+
+
+def test_item_df_embedding_generation(clip_encoder, item_df):
+    item_clip_features_embed = clip_encoder.clip_embeddings(item_df)
+    # produced the object to be used by the workflow:
+    # store.push('item_clip_features_embed', item_clip_features_embed, to=PushMode.ONLINE, allow_registry_cache=False)
+    assert item_clip_features_embed is not None
 
 
 @pytest.fixture
