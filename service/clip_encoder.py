@@ -110,7 +110,7 @@ class ClipEncoder:
         return result, none_indices
 
     def encode_texts(self, texts: list[str]):
-        inputs = self.tokenizer(texts, padding=True, return_tensors="pt")
+        inputs = self.tokenizer(texts, padding=True, return_tensors="pt", truncation=True)
         with torch.no_grad():
             return self.model.get_text_features(**inputs)
 

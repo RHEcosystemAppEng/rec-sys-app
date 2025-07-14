@@ -78,6 +78,13 @@ def images_having_nones(more_images: list):
     return result
 
 
+@pytest.fixture
+def long_text():
+    txt_path = Path(__file__).parent.joinpath("data").joinpath("long_text.txt")
+    with open(txt_path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
 def test_text_encoding(clip_encoder, more_texts):
     result_batched = clip_encoder.encode_texts_batched(more_texts, batch_size=3)
     result_simple = clip_encoder.encode_texts(more_texts)
@@ -131,3 +138,8 @@ def item_wrong_img_df():
 def test_wrong_url(clip_encoder, item_wrong_img_df):
     clip_embeddings = clip_encoder.create_clip_embeddings(item_wrong_img_df)
     assert clip_embeddings
+
+
+def test_long_text(clip_encoder, long_text):
+    embeddings = clip_encoder.encode_texts([long_text])
+    assert embeddings is not None
