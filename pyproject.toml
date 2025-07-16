@@ -1,5 +1,5 @@
 [project]
-name = "rec-sys-app"
+name = "recsysapp"
 version = "0.1.1"
 description = "Add your description here"
 readme = "README.md"
