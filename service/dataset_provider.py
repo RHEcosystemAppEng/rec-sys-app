@@ -3,8 +3,17 @@ from pathlib import Path
 
 import pandas as pd
 from feast import FeatureStore
+import importlib
+import sys
 
-from models import data_util
+# Workaround to import models from workflow and backend
+# that have different directory structures. (public/* vs /*)
+# from module_models import data_util
+DATA_UTIL_FILE_PATH = Path(__file__).parent.parent / "models" / "data_util.py"
+spec = importlib.util.spec_from_file_location("module.name", str(DATA_UTIL_FILE_PATH))
+data_util = importlib.util.module_from_spec(spec)
+sys.modules["module.name"] = data_util
+spec.loader.exec_module(data_util)
 
 
 class DatasetProvider:
