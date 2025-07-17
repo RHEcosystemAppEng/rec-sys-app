@@ -3,7 +3,7 @@ import requests
 from feast import FeatureStore
 from PIL import Image
 
-from service.clip_encoder import ClipEncoder
+from recsysapp.service.clip_encoder import ClipEncoder
 
 
 class SearchByImageService:

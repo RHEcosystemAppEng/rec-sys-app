@@ -3,9 +3,9 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-from models.data_util import UserItemMagnitudeDataset, preproccess_pipeline
-from models.entity_tower import EntityTower
-from models.two_tower import TwoTowerModel
+from recsysapp.models.data_util import UserItemMagnitudeDataset, preproccess_pipeline
+from recsysapp.models.entity_tower import EntityTower
+from recsysapp.models.two_tower import TwoTowerModel
 
 
 def create_and_train_two_tower(

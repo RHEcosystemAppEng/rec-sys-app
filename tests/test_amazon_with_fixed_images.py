@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from generation.amazon_with_fixed_images import fix_url
+from recsysapp.generation.amazon_with_fixed_images import fix_url
 
 
 @pytest.fixture
@@ -23,7 +23,7 @@ def test_fix_url(wrong_url, correct_url):
 
 @pytest.fixture()
 def base_path():
-    return Path(__file__).parent.parent.joinpath('feature_repo').joinpath('data')
+    return Path(__file__).parent.parent.joinpath('recsysapp').joinpath('feature_repo').joinpath('data')
 
 
 @pytest.fixture
