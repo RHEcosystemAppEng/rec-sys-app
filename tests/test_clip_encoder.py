@@ -8,7 +8,7 @@ import requests
 import torch
 from PIL import Image
 
-from service.clip_encoder import ClipEncoder
+from recsysapp.service.clip_encoder import ClipEncoder
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -47,7 +47,8 @@ def simple_images():
 
     generated_image_path = (
         Path(__file__)
-        .parent.parent.joinpath("generation")
+        .parent.parent.joinpath("recsysapp")
+        .joinpath("generation")
         .joinpath("data")
         .joinpath("generated_images")
     )

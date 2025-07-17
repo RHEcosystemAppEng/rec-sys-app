@@ -27,8 +27,8 @@ class DatasetProvider:
         self._loaded = False
 
         if (
-                self._item_df_path.exists() & self._user_df_path.exists()
-                & self._interaction_df_path.exists() & force_load is False
+                self._item_df_path.exists() and self._user_df_path.exists()
+                and self._interaction_df_path.exists() and (force_load is False)
         ):
             self._item_df = pd.read_parquet(self._item_df_path)
             self._user_df = pd.read_parquet(self._user_df_path)
@@ -52,7 +52,7 @@ class DatasetProvider:
 
 class LocalDatasetProvider(DatasetProvider):
 
-    def __init__(self, store=None, data_dir="./feature_repo/data"):
+    def __init__(self, store=None, data_dir="./recsysapp/feature_repo/data"):
         super().__init__(data_dir, False)
         if self._loaded is False:
             assert store is not None
@@ -102,7 +102,7 @@ class LocalDatasetProvider(DatasetProvider):
 
 class RemoteDatasetProvider(DatasetProvider):
 
-    def __init__(self, url: str, data_dir="./feature_repo/data", force_load=False):
+    def __init__(self, url: str, data_dir="./recsysapp/feature_repo/data", force_load=False):
         super().__init__(data_dir, force_load)
         if self._loaded is False:
             df = pd.read_csv(url)

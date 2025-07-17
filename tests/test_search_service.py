@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 import torch
 
-from service.search_by_text import SearchService
+from recsysapp.service.search_by_text import SearchService
 
 
 @pytest.fixture
@@ -33,8 +33,8 @@ def mock_feature_store():
 @pytest.fixture
 def search_service(mock_feature_store):
     with (
-        patch("service.search_by_text.AutoTokenizer") as mock_tokenizer,
-        patch("service.search_by_text.AutoModel") as mock_model,
+        patch("recsysapp.service.search_by_text.AutoTokenizer") as mock_tokenizer,
+        patch("recsysapp.service.search_by_text.AutoModel") as mock_model,
     ):
         # Mock the tokenizer
         mock_tokenizer.from_pretrained.return_value = Mock()

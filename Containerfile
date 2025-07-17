@@ -9,9 +9,7 @@ RUN pip3 install uv
 RUN uv pip install -r pyproject.toml
 RUN dnf update -y
 
-COPY models/ models/
-COPY feature_repo/ feature_repo/
-COPY service/ service/
+COPY recsysapp/ recsysapp/
 # give premisssions 
 RUN chmod -R 777 . && ls -la
 

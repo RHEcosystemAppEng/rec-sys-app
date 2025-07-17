@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 import torch
 
-from models.data_util import data_preproccess
+from recsysapp.models.data_util import data_preproccess
 
 
 @pytest.fixture

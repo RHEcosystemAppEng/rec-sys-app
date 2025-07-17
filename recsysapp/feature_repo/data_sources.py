@@ -3,7 +3,6 @@ import os
 from feast import FileSource, PushSource
 from feast.data_format import ParquetFormat
 
-feast_path = "feature_repo"
 data_path = "data"
 
 users_source = FileSource(

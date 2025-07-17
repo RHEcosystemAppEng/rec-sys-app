@@ -1,8 +1,8 @@
 import pandas as pd
 import pytest
 
-from models.entity_tower import EntityTower
-from models.train_two_tower import create_and_train_two_tower
+from recsysapp.models.entity_tower import EntityTower
+from recsysapp.models.train_two_tower import create_and_train_two_tower
 
 
 @pytest.fixture
