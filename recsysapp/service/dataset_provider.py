@@ -28,7 +28,7 @@ class DatasetProvider:
 
         if (
                 self._item_df_path.exists() & self._user_df_path.exists()
-                & self._interaction_df_path.exists() & force_load is False
+                & self._interaction_df_path.exists() & (force_load is False)
         ):
             self._item_df = pd.read_parquet(self._item_df_path)
             self._user_df = pd.read_parquet(self._user_df_path)
