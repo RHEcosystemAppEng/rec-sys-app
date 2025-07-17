@@ -1,6 +1,8 @@
-import pytest
 from pathlib import Path
+
 import pandas as pd
+import pytest
+
 from generation.amazon_with_fixed_images import fix_url
 
 

@@ -1,10 +1,10 @@
+import importlib
+import sys
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
 from feast import FeatureStore
-import importlib
-import sys
 
 # Workaround to import models from workflow and backend
 # that have different directory structures. (public/* vs /*)

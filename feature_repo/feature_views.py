@@ -1,15 +1,11 @@
 from datetime import timedelta
 
-from data_sources import (
-    interactions_source,
-    item_clip_features_embed_push_source,
-    item_embed_push_source,
-    item_textual_features_embed_push_source,
-    items_source,
-    user_embed_push_source,
-    user_items_push_source,
-    users_source,
-)
+from data_sources import (interactions_source,
+                          item_clip_features_embed_push_source,
+                          item_embed_push_source,
+                          item_textual_features_embed_push_source,
+                          items_source, user_embed_push_source,
+                          user_items_push_source, users_source)
 from entities import item_entity, user_entity
 from feast import FeatureView, Field, StreamFeatureView
 from feast.stream_feature_view import stream_feature_view
