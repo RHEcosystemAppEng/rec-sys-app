@@ -260,14 +260,14 @@ if __name__ == "__main__":
     print("\nInteractions sample:")
     print(interactions.head())
 
-    data_path = pathlib.Path("feature_repo/data")
+    data_path = pathlib.Path("recsysapp/feature_repo/data")
     data_path.mkdir(parents=True, exist_ok=True)
 
     # Save to parquet files
-    users.to_parquet("feature_repo/data/recommendation_users.parquet", index=False)
-    items.to_parquet("feature_repo/data/recommendation_items.parquet", index=False)
+    users.to_parquet(data_path / "recommendation_users.parquet", index=False)
+    items.to_parquet(data_path / "recommendation_items.parquet", index=False)
     interactions.to_parquet(
-        "feature_repo/data/recommendation_interactions.parquet", index=False
+        data_path / "recommendation_interactions.parquet", index=False
     )
 
     # Create dummy dataframes for push source
@@ -300,15 +300,15 @@ if __name__ == "__main__":
     )
 
     dummy_item_embed_df.to_parquet(
-        "feature_repo/data/dummy_item_embed.parquet", index=False
+        data_path / "dummy_item_embed.parquet", index=False
     )
     dummy_user_embed_df.to_parquet(
-        "feature_repo/data/dummy_user_embed.parquet", index=False
+        data_path / "dummy_user_embed.parquet", index=False
     )
-    dummy_user_items_df.to_parquet("feature_repo/data/user_items.parquet", index=False)
+    dummy_user_items_df.to_parquet(data_path / "user_items.parquet", index=False)
     dummy_textual_feature_df.to_parquet(
-        "feature_repo/data/item_textual_features_embed.parquet", index=False
+        data_path / "item_textual_features_embed.parquet", index=False
     )
     dummy_clip_feature_df.to_parquet(
-        "feature_repo/data/item_clip_features_embed.parquet", index=False
+        data_path / "item_clip_features_embed.parquet", index=False
     )

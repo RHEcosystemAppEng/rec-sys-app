@@ -4,8 +4,8 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
-from models.item_tower import ItemTower
-from models.user_tower import UserTower
+from recsysapp.models.item_tower import ItemTower
+from recsysapp.models.user_tower import UserTower
 
 
 class TwoTowerModel(nn.Module):

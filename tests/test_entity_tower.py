@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from models.entity_tower import EntityTower
+from recsysapp.models.entity_tower import EntityTower
 
 D_MODEL = 64
 DIM_RATIO = {"numeric": 1, "categorical": 2, "text": 7, "image": 0}
